@@ -1,0 +1,146 @@
+[
+    {
+        "label": "pika,",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pika.",
+        "description": "pika.",
+        "detail": "pika.",
+        "documentation": {}
+    },
+    {
+        "label": "pika",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pika",
+        "description": "pika",
+        "detail": "pika",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "Async.receive",
+        "description": "Async.receive",
+        "peekOfCode": "def main():\n    url = 'amqps://utfvtbem:dAT1vSsYZDWhNpL9rsZzdGmYDc1mhzx9@lionfish.rmq.cloudamqp.com/utfvtbem'\n    params = pika.URLParameters(url)\n    connection = pika.BlockingConnection(params)\n    channel = connection.channel()\n    channel.queue_declare(queue='hello')\n    def callback(ch, method, properties, body):\n        print(\" [x] Received %r\" % body)\n    channel.basic_consume(queue='hello', on_message_callback=callback, auto_ack=True)\n    print(' [*] Waiting for messages. To exit press CTRL+C')",
+        "detail": "Async.receive",
+        "documentation": {}
+    },
+    {
+        "label": "url",
+        "kind": 5,
+        "importPath": "Async.send",
+        "description": "Async.send",
+        "peekOfCode": "url = 'amqps://utfvtbem:dAT1vSsYZDWhNpL9rsZzdGmYDc1mhzx9@lionfish.rmq.cloudamqp.com/utfvtbem'\nparams = pika.URLParameters(url)\nconnection = pika.BlockingConnection(params)\nchannel = connection.channel()\nchannel.queue_declare(queue='hello')\nchannel.basic_publish(exchange='',\n                      routing_key='hello',\n                      body='Hello World!')\nprint(\" [x] Sent 'Hello World!'\")\nconnection.close()",
+        "detail": "Async.send",
+        "documentation": {}
+    },
+    {
+        "label": "params",
+        "kind": 5,
+        "importPath": "Async.send",
+        "description": "Async.send",
+        "peekOfCode": "params = pika.URLParameters(url)\nconnection = pika.BlockingConnection(params)\nchannel = connection.channel()\nchannel.queue_declare(queue='hello')\nchannel.basic_publish(exchange='',\n                      routing_key='hello',\n                      body='Hello World!')\nprint(\" [x] Sent 'Hello World!'\")\nconnection.close()",
+        "detail": "Async.send",
+        "documentation": {}
+    },
+    {
+        "label": "connection",
+        "kind": 5,
+        "importPath": "Async.send",
+        "description": "Async.send",
+        "peekOfCode": "connection = pika.BlockingConnection(params)\nchannel = connection.channel()\nchannel.queue_declare(queue='hello')\nchannel.basic_publish(exchange='',\n                      routing_key='hello',\n                      body='Hello World!')\nprint(\" [x] Sent 'Hello World!'\")\nconnection.close()",
+        "detail": "Async.send",
+        "documentation": {}
+    },
+    {
+        "label": "channel",
+        "kind": 5,
+        "importPath": "Async.send",
+        "description": "Async.send",
+        "peekOfCode": "channel = connection.channel()\nchannel.queue_declare(queue='hello')\nchannel.basic_publish(exchange='',\n                      routing_key='hello',\n                      body='Hello World!')\nprint(\" [x] Sent 'Hello World!'\")\nconnection.close()",
+        "detail": "Async.send",
+        "documentation": {}
+    },
+    {
+        "label": "FibonacciRpcClient",
+        "kind": 6,
+        "importPath": "Sync.rpc_client",
+        "description": "Sync.rpc_client",
+        "peekOfCode": "class FibonacciRpcClient(object):\n    def __init__(self):\n        self.connection = pika.BlockingConnection(pika.URLParameters(url='amqps://utfvtbem:dAT1vSsYZDWhNpL9rsZzdGmYDc1mhzx9@lionfish.rmq.cloudamqp.com/utfvtbem'))\n        self.channel = self.connection.channel()\n        result = self.channel.queue_declare(queue='rpc_queue_return', exclusive=True, durable=True)\n        self.callback_queue = result.method.queue\n        self.channel.basic_consume(\n            queue=self.callback_queue,\n            on_message_callback=self.on_response,\n            auto_ack=True)",
+        "detail": "Sync.rpc_client",
+        "documentation": {}
+    },
+    {
+        "label": "fibonacci_rpc",
+        "kind": 5,
+        "importPath": "Sync.rpc_client",
+        "description": "Sync.rpc_client",
+        "peekOfCode": "fibonacci_rpc = FibonacciRpcClient()\nprint(\" [x] Requesting fib(30)\")\nresponse = fibonacci_rpc.call(10)\nprint(\" [.] Got %r\" % response)",
+        "detail": "Sync.rpc_client",
+        "documentation": {}
+    },
+    {
+        "label": "response",
+        "kind": 5,
+        "importPath": "Sync.rpc_client",
+        "description": "Sync.rpc_client",
+        "peekOfCode": "response = fibonacci_rpc.call(10)\nprint(\" [.] Got %r\" % response)",
+        "detail": "Sync.rpc_client",
+        "documentation": {}
+    },
+    {
+        "label": "fib",
+        "kind": 2,
+        "importPath": "Sync.rpc_server",
+        "description": "Sync.rpc_server",
+        "peekOfCode": "def fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n - 1) + fib(n - 2)\ndef on_request(ch, method, props, body):\n    n = int(body)\n    print(\" [.] fib(%s)\" % n)",
+        "detail": "Sync.rpc_server",
+        "documentation": {}
+    },
+    {
+        "label": "on_request",
+        "kind": 2,
+        "importPath": "Sync.rpc_server",
+        "description": "Sync.rpc_server",
+        "peekOfCode": "def on_request(ch, method, props, body):\n    n = int(body)\n    print(\" [.] fib(%s)\" % n)\n    response = fib(n)\n    ch.basic_publish(exchange='',\n                     routing_key=props.reply_to,\n                     properties=pika.BasicProperties(correlation_id = \\\n                                                         props.correlation_id),\n                     body=str(response))\n    ch.basic_ack(delivery_tag=method.delivery_tag)",
+        "detail": "Sync.rpc_server",
+        "documentation": {}
+    },
+    {
+        "label": "connection",
+        "kind": 5,
+        "importPath": "Sync.rpc_server",
+        "description": "Sync.rpc_server",
+        "peekOfCode": "connection = pika.BlockingConnection(pika.URLParameters(url='amqps://utfvtbem:dAT1vSsYZDWhNpL9rsZzdGmYDc1mhzx9@lionfish.rmq.cloudamqp.com/utfvtbem'))\nchannel = connection.channel()\nchannel.queue_declare(queue='rpc_queue')\ndef fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n - 1) + fib(n - 2)",
+        "detail": "Sync.rpc_server",
+        "documentation": {}
+    },
+    {
+        "label": "channel",
+        "kind": 5,
+        "importPath": "Sync.rpc_server",
+        "description": "Sync.rpc_server",
+        "peekOfCode": "channel = connection.channel()\nchannel.queue_declare(queue='rpc_queue')\ndef fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n - 1) + fib(n - 2)\ndef on_request(ch, method, props, body):",
+        "detail": "Sync.rpc_server",
+        "documentation": {}
+    }
+]
